@@ -11,3 +11,26 @@ GET     /message                    controllers.AsyncController.message
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+# Competidor
+GET     /competidor/crear                           controllers.CompetidorController.crear()
+POST    /competidor/guardar                         controllers.CompetidorController.guardarNuevo()
+GET     /competidores                               controllers.CompetidorController.darCompetidores()
+POST    /competidor/*id/guardarEditado              controllers.CompetidorController.guardarEditado(id: Long)
+GET     /competidor/*id/editar                      controllers.CompetidorController.editar(id: Long)
+GET     /competidor/*id/competencias                controllers.CompetidorController.verCompetencias(id: Long)
+GET     /competidor/*id/inscripciones               controllers.CompetidorController.verInscripciones(id: Long)
+GET     /competidor/*id/inscripciones/*idIns        controllers.CompetidorController.verInscripcion(id: Long, idIns: Long)
+POST    /competidor/*id/*idComp/guardarInscripcion  controllers.CompetidorController.guardarInscripcion(id: Long, idComp: Long)
+GET     /competidor/*id/*idComp/crearIinscripcion   controllers.CompetidorController.crearInscripcion(id: Long, idComp: Long)
+GET     /competidor/*id/*idComp                     controllers.CompetidorController.verCompetencia(id: Long, idComp: Long)
+GET     /competidor/*id                             controllers.CompetidorController.mostrar(id: Long)
+
+
+# Competencia
+POST    /competencia/crear                      controllers.CompetenciaController.crear()
+GET     /competencias                           controllers.CompetenciaController.darCompetencias()
+GET     /competencia/*id/editar                 controllers.CompetenciaController.editar(id: Long)
+GET     /competencia/*id                        controllers.CompetenciaController.mostrar(id: Long)
+
+

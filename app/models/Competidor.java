@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "competidor")
 public class Competidor extends Model {
 
-    public static Finder<Long,Inscripcion> FINDER = new Finder<>(Inscripcion.class);
+    public static Finder<Long,Competidor> FINDER = new Finder<>(Competidor.class);
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
