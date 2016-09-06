@@ -11,10 +11,12 @@
  *@
 @main {
 
-    @*
-     * Get an `Html` object by calling the built-in Play welcome
-     * template and passing a `String` message.
-     *@
-    @play20.welcome(message, style = "Java")
+    <div class="jumbotron">
+        <h1>Bienvenidos competidores</h1>
+        <p>@message</p>
+        <p>Registrense para poder participar de las competencias</p>
+        <p>Si ya se encuentran registrados, accedan a su página "/competidor/:id"</p>
+        <p><a class="btn btn-primary btn-lg" href=@routes.CompetidorController.crear() role="button">Registrar competidor</a></p>
+    </div>
 
 }

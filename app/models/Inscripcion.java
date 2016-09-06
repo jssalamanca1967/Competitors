@@ -23,7 +23,9 @@ public class Inscripcion extends Model {
 
     public String descripcion;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    public String rutaImagen;
+
+    @ManyToOne
     public Competencia competencia;
 
     @Formats.DateTime(pattern="yyyy-MM-dd")
@@ -42,9 +44,10 @@ public class Inscripcion extends Model {
         updated = new Date(System.currentTimeMillis());
     }
 
-    public Inscripcion(String nombre, String descripcion, Competencia competencia) {
+    public Inscripcion(String nombre, String descripcion, Competencia competencia, String rutaImagen) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.competencia = competencia;
+        this.rutaImagen = rutaImagen;
     }
 }

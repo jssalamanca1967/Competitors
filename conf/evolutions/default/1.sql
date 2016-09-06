@@ -29,6 +29,7 @@ create table inscripcion (
   competidor_id                 bigint not null,
   nombre                        varchar(255),
   descripcion                   varchar(255),
+  ruta_imagen                   varchar(255),
   competencia_id                bigint,
   created                       timestamp,
   updated                       timestamp,
