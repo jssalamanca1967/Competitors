@@ -2,7 +2,7 @@
 
 @main{
 
-    @helper.form(action = routes.CompetidorController.crearInscripcion(competidor.id, competencia.id), 'id -> "competidor_inscripcion_form", 'method -> "POST", 'enctype -> "multipart/form-data") {
+    @helper.form(action = routes.CompetidorController.guardarInscripcion(competidor.id, competencia.id), 'id -> "competidor_inscripcion_form", 'method -> "POST", 'enctype -> "multipart/form-data") {
       <form class="form-signin">
         <h2 class="form-signin-heading">Inscribete</h2>
 
@@ -16,12 +16,13 @@
           '_label -> "Descripción",
           '_showConstraints -> false
         )
-        <label for="inputFile" class="sr-only">Imagen</label>
-        <input type="file" name="picture">
+        @helper.inputFile(
+            form("imagen"),
+            '_label -> "Imagen",
+            '_showConstraints -> false
+        )
 
-        <p>
-          <input type="submit">
-        </p>
+
         <button class="btn btn-lg btn-primary btn-block" type="submit">Registrarse</button>
       </form>
 

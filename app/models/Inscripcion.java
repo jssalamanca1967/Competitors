@@ -28,6 +28,9 @@ public class Inscripcion extends Model {
     @ManyToOne
     public Competencia competencia;
 
+    @ManyToOne
+    public Competidor competidor;
+
     @Formats.DateTime(pattern="yyyy-MM-dd")
     public Date created;
 
@@ -44,10 +47,17 @@ public class Inscripcion extends Model {
         updated = new Date(System.currentTimeMillis());
     }
 
-    public Inscripcion(String nombre, String descripcion, Competencia competencia, String rutaImagen) {
+    public Inscripcion(String nombre, String descripcion, Competencia competencia, String nombreArchivo, String bucket, Competidor competidor) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.competencia = competencia;
-        this.rutaImagen = rutaImagen;
+        this.rutaImagen = "https://s3-us-west-2.amazonaws.com/" + bucket + "/" + nombreArchivo;
+        this.competidor = competidor;
+        created = new Date(System.currentTimeMillis());
+    }
+
+    public void cambiarRutaImagen(String nombreArchivo, String bucket){
+        this.rutaImagen = "https://s3.amazonaws.com/" + bucket + "/" + nombreArchivo;
+
     }
 }

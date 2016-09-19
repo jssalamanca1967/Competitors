@@ -44,5 +44,7 @@ public class Competencia extends Model {
 
     public Competencia(String nombre) {
         this.nombre = nombre;
+        created = new Date(System.currentTimeMillis());
+        updated = new Date(System.currentTimeMillis());
     }
 }

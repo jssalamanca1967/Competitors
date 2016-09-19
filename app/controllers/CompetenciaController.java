@@ -16,8 +16,9 @@ public class CompetenciaController extends Controller {
     public Result crear() {
         JsonNode nProduct = request().body().asJson();
         Competencia competencia = Json.fromJson( nProduct , Competencia.class ) ;
-        competencia.save();
-        return ok(Json.toJson(competencia));
+        Competencia comp = new Competencia(competencia.nombre);
+        comp.save();
+        return ok(Json.toJson(comp));
     }
 
     public Result darCompetencias(){

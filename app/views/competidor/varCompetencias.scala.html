@@ -16,9 +16,9 @@
 
       <tr>
         <th scope=row><h4>@competencia.nombre</h4></th>
+        <td><h4>@competencia.created.getDate / @competencia.created.getMonth / @(competencia.created.getYear + 1900)</h4></td>
         <td><h4>@competencia.inscripciones.size()</h4></td>
-        <td><h4>@competencia.created.toString()</h4></td>
-        <td><h4><a href=@routes.CompetidorController.verCompetencia(competidor.id, competencia.id)>Ver más</a>
+        <td><h4><a href=@routes.CompetidorController.verCompetencia(competidor.id, competencia.id)>Ver más</a> |
           <a href=@routes.CompetidorController.crearInscripcion(competidor.id, competencia.id)>Inscribirse</a></h4></td>
       </tr>
 

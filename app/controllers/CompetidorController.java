@@ -56,27 +56,71 @@ public class CompetidorController extends Controller {
     }
 
     public Result guardarInscripcion(long id, long idComp) {
+
+        Competidor competidor = Competidor.FINDER.byId(id);
+        Competencia competencia = Competencia.FINDER.byId(idComp);
+
+        Form<Inscripcion> form = Form.form(Inscripcion.class).bindFromRequest();
         Http.MultipartFormData<File> body = request().body().asMultipartFormData();
-        Http.MultipartFormData.FilePart<File> picture = body.getFile("picture");
+        Http.MultipartFormData.FilePart<File> picture = body.getFile("imagen");
+
         JsonNode json = request().body().asJson();
 
-        String nombre = json.get("nombre").asText();
-        String descripcion = json.get("descripcion").asText();
+        String nombre = form.field("nombre").value();
+        String descripcion = form.field("descripcion").value();
+        String fileName = "";
+        String contentType = "";
+        File file = null;
 
         if (picture != null) {
-            String fileName = picture.getFilename();
-            String contentType = picture.getContentType();
-            File file = picture.getFile();
-            return ok("File uploaded");
+            fileName = picture.getFilename();
+            contentType = picture.getContentType();
+            file = picture.getFile();
+
         } else {
-            flash("error", "Missing file");
-            return badRequest();
+            form.reject("imagen", "Por favor, adjunte una imagen");
+        }
+
+        if(nombre.isEmpty()){
+            form.reject("nombre", "Por favor, escriba un nombre válido");
+        }
+
+        if(descripcion.isEmpty()){
+            form.reject("descripcion", "Por favor, escriba una descripcion válida");
+        }
+
+        if(form.hasErrors()){
+            return badRequest(views.html.inscripcion.crearInscipcion.render(competidor, competencia, form));
+        }
+        else{
+
+            S3Connection conexion = S3Connection.getInstance();
+            if(fileName.endsWith(".jpg")){
+                fileName = competidor.nombre.trim() + "-" + competencia.nombre.replace(" ", "-") + "-" + competencia.inscripciones.size() + ".jpg";
+            }
+            else if(fileName.endsWith(".png")){
+                fileName = competidor.nombre.trim() + "-" + competencia.nombre.replace(" ", "-") + "-" + competencia.inscripciones.size() + ".png";
+            }
+
+            System.out.println(fileName);
+
+            conexion.uploadFile(file, fileName);
+            Inscripcion inscripcion = new Inscripcion(nombre, descripcion, competencia, fileName, conexion.s3Bucket, competidor);
+            competidor.inscripciones.add(inscripcion);
+            inscripcion.save();
+            competidor.save();
+
+            return redirect(routes.CompetidorController.verInscripciones(id));
+
         }
 
     }
 
     public Result crearInscripcion(long id, long idComp) {
-        return play.mvc.Results.TODO;
+        Competidor competidor = Competidor.FINDER.byId(id);
+        Competencia competencia = Competencia.FINDER.byId(idComp);
+        Form<Inscripcion> form = Form.form(Inscripcion.class);
+        return ok(views.html.inscripcion.crearInscipcion.render(competidor, competencia, form));
     }
 
     public Result verCompetencia(long id, long idComp) {
