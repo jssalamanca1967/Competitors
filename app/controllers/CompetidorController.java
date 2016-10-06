@@ -1,5 +1,7 @@
 package controllers;
 
+import aws.S3Connection;
+import aws.SQSConnection;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.Competencia;
 import models.Competidor;
@@ -94,7 +96,8 @@ public class CompetidorController extends Controller {
         }
         else{
 
-            S3Connection conexion = S3Connection.getInstance();
+            S3Connection conexion = new S3Connection();
+            SQSConnection sqs = new SQSConnection();
             if(fileName.endsWith(".jpg")){
                 fileName = competidor.nombre.trim() + "-" + competencia.nombre.replace(" ", "-") + "-" + competencia.inscripciones.size() + ".jpg";
             }
@@ -104,11 +107,15 @@ public class CompetidorController extends Controller {
 
             System.out.println(fileName);
 
-            conexion.uploadFile(file, fileName);
+            fileName = competidor.nombre.trim() + competencia.nombre.replace(" ", "-") + "-" + competencia.inscripciones.size() + "/" + fileName;
+
+            String key = conexion.uploadFile(file, fileName);
             Inscripcion inscripcion = new Inscripcion(nombre, descripcion, competencia, fileName, conexion.s3Bucket, competidor);
             competidor.inscripciones.add(inscripcion);
             inscripcion.save();
             competidor.save();
+
+            sqs.sendMessage(fileName+";"+key);
 
             return redirect(routes.CompetidorController.verInscripciones(id));
 

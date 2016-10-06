@@ -22,8 +22,10 @@ GET     /competidor/*id                             controllers.CompetidorContro
 
 
 # Competencia
-POST    /competencia/crear                      controllers.CompetenciaController.crear()
-GET     /competencias                           controllers.CompetenciaController.darCompetencias()
+POST    /competencias                               controllers.CompetenciaController.crear()
+GET     /competencias                               controllers.CompetenciaController.darCompetencias()
+
+GET     /hirefire/:hirefire/info                    controllers.HireFireController.recibir(hirefire: String)
 
 
 
