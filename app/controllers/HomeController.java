@@ -1,15 +1,9 @@
 package controllers;
 
-import aws.SQSConnection;
 import com.typesafe.config.ConfigFactory;
 import play.mvc.*;
 
-import services.ZipBuilder;
 import views.html.*;
-import worker.Worker;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -31,8 +25,6 @@ public class HomeController extends Controller {
         String accessKey = ConfigFactory.load().getString(AWS_ACCESS_KEY);
         String secretKey = ConfigFactory.load().getString(AWS_SECRET_KEY);
         String s3Bucket = ConfigFactory.load().getString(AWS_S3_BUCKET);
-
-        Worker worker = Worker.getInstance();
 
         return ok(index.render(accessKey + " -- " + secretKey + " -- " + s3Bucket));
 
