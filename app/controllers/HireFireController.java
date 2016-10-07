@@ -23,7 +23,7 @@ public class HireFireController extends Controller {
 
         int cola = sqs.queueSize();
 
-        RespuestaJSON rta = new RespuestaJSON("worker", cola);
+        RespuestaJSON rta = new RespuestaJSON("web", cola);
 
         List<RespuestaJSON> lista = new ArrayList<>();
 
