@@ -19,7 +19,7 @@ public class WorkerActor extends UntypedActor {
     @Override
     public void onReceive(Object message) throws Exception {
 
-        System.out.println(message);
+
 
         SQSConnection sqs = new SQSConnection();
         S3Connection s3 = new S3Connection();

@@ -22,13 +22,7 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        String accessKey = ConfigFactory.load().getString(AWS_ACCESS_KEY);
-        String secretKey = ConfigFactory.load().getString(AWS_SECRET_KEY);
-        String s3Bucket = ConfigFactory.load().getString(AWS_S3_BUCKET);
-
-        return ok(index.render(accessKey + " -- " + secretKey + " -- " + s3Bucket));
-
-
+        return ok(index.render(""));
     }
 
 
