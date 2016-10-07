@@ -6,6 +6,9 @@ import play.libs.Json;
 import play.mvc.*;
 import scala.util.parsing.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by John on 06/10/2016.
  */
@@ -22,7 +25,11 @@ public class HireFireController extends Controller {
 
         RespuestaJSON rta = new RespuestaJSON("worker", cola);
 
-        JsonNode json = Json.toJson(rta);
+        List<RespuestaJSON> lista = new ArrayList<>();
+
+        lista.add(rta);
+
+        JsonNode json = Json.toJson(lista);
 
         return ok(json);
 
