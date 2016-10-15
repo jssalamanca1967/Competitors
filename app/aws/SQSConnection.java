@@ -7,6 +7,7 @@ import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import com.amazonaws.services.sqs.model.Message;
+import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.ReceiveMessageResult;
 import com.typesafe.config.ConfigFactory;
 import play.Logger;
@@ -61,7 +62,10 @@ public class SQSConnection {
 
     public int queueSize(){
         String sqsUrl = ConfigFactory.load().getString(AWS_SQS_URL);
-        ReceiveMessageResult result = amazonSQS.receiveMessage(sqsUrl);
+        ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(sqsUrl);
+        receiveMessageRequest.setMaxNumberOfMessages(500);
+
+        ReceiveMessageResult result = amazonSQS.receiveMessage(receiveMessageRequest);
         List<Message> mensajes = result.getMessages();
         return mensajes.size();
     }
