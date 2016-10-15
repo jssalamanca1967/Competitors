@@ -28,3 +28,6 @@ GET     /competencias                               controllers.CompetenciaContr
 GET     /hirefire/:hirefire/info                    controllers.HireFireController.recibir(hirefire: String)
 
 GET     /loaderio-c94b8b38689af204096c8b2bc5f37236/  controllers.HomeController.loaderio()
+
+GET     /enviar100                                  controllers.HomeController.enviar100()
+

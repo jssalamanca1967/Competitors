@@ -1,5 +1,6 @@
 package controllers;
 
+import aws.SQSConnection;
 import com.typesafe.config.ConfigFactory;
 import play.libs.Json;
 import play.mvc.*;
@@ -18,6 +19,12 @@ public class HomeController extends Controller {
 
     public Result loaderio() {
         return ok("loaderio-c94b8b38689af204096c8b2bc5f37236");
+    }
+
+    public Result enviar100(){
+        SQSConnection sqs = new SQSConnection();
+        sqs.envviar100Mensajes();
+        return ok("Enviando");
     }
 
     /**

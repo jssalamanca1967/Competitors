@@ -65,4 +65,10 @@ public class SQSConnection {
         List<Message> mensajes = result.getMessages();
         return mensajes.size();
     }
+
+    public void envviar100Mensajes(){
+        for(int i = 0; i < 100; i++){
+            sendMessage("Hola" + i);
+        }
+    }
 }
