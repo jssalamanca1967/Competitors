@@ -21,7 +21,7 @@ public class HireFireController extends Controller {
 
         SQSConnection sqs = new SQSConnection();
 
-        int cola = sqs.queueSize();
+        String cola = sqs.queueSize();
 
         RespuestaJSON rta = new RespuestaJSON("web", cola);
 
@@ -37,9 +37,9 @@ public class HireFireController extends Controller {
 
     public class RespuestaJSON{
         public String name;
-        public int quantity;
+        public String quantity;
 
-        public RespuestaJSON(String pName, int pQuantity){
+        public RespuestaJSON(String pName, String pQuantity){
             name = pName;
             quantity = pQuantity;
         }

@@ -5,13 +5,12 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
-import com.amazonaws.services.sqs.model.DeleteMessageRequest;
-import com.amazonaws.services.sqs.model.Message;
-import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
-import com.amazonaws.services.sqs.model.ReceiveMessageResult;
+import com.amazonaws.services.sqs.buffered.ReceiveQueueBuffer;
+import com.amazonaws.services.sqs.model.*;
 import com.typesafe.config.ConfigFactory;
 import play.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,14 +59,14 @@ public class SQSConnection {
         return mensaje;
     }
 
-    public int queueSize(){
+    public String queueSize(){
         String sqsUrl = ConfigFactory.load().getString(AWS_SQS_URL);
-        ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(sqsUrl);
-        receiveMessageRequest.setMaxNumberOfMessages(500);
+        List<String> atributos = new ArrayList<>();
+        atributos.add("ApproximateNumberOfMessages");
+        GetQueueAttributesResult result = amazonSQS.getQueueAttributes(new GetQueueAttributesRequest(sqsUrl, atributos));
 
-        ReceiveMessageResult result = amazonSQS.receiveMessage(receiveMessageRequest);
-        List<Message> mensajes = result.getMessages();
-        return mensajes.size();
+        String mensajes = result.getAttributes().get("ApproximateNumberOfMessages");
+        return mensajes;
     }
 
     public void envviar100Mensajes(){
