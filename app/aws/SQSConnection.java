@@ -59,14 +59,14 @@ public class SQSConnection {
         return mensaje;
     }
 
-    public String queueSize(){
+    public int queueSize(){
         String sqsUrl = ConfigFactory.load().getString(AWS_SQS_URL);
         List<String> atributos = new ArrayList<>();
         atributos.add("ApproximateNumberOfMessages");
         GetQueueAttributesResult result = amazonSQS.getQueueAttributes(new GetQueueAttributesRequest(sqsUrl, atributos));
 
         String mensajes = result.getAttributes().get("ApproximateNumberOfMessages");
-        return mensajes;
+        return Integer.parseInt(mensajes);
     }
 
     public void envviar100Mensajes(){
